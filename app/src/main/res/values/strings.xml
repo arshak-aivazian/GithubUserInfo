@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GithubUserInfo</string>
+    <string name="error_network">Ошибка загрузки</string>
+    <string name="label_login">user login:</string>
+    <string name="label_name">user name:</string>
+    <string name="label_bio">user bio:</string>
+    <string name="label_email">user email:</string>
+    <string name="label_created_at">created at:</string>
+    <string name="btn_open">open in browser</string>
+</resources>

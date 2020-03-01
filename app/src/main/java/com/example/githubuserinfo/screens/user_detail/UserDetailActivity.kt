@@ -9,11 +9,13 @@ import androidx.databinding.DataBindingUtil
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.example.githubuserinfo.MyApp
 import com.example.githubuserinfo.R
 import com.example.githubuserinfo.databinding.ActivityUserDetailBinding
 import com.example.githubuserinfo.network.api.ApiService
 import com.example.githubuserinfo.network.pojo.User
 import kotlinx.android.synthetic.main.activity_user_detail.*
+import javax.inject.Inject
 
 class UserDetailActivity : MvpAppCompatActivity(), UserDetailView {
 
@@ -27,6 +29,9 @@ class UserDetailActivity : MvpAppCompatActivity(), UserDetailView {
         }
     }
 
+    @Inject
+    lateinit var model: UserDetailModel
+
     lateinit var binding: ActivityUserDetailBinding
 
     @InjectPresenter
@@ -34,12 +39,12 @@ class UserDetailActivity : MvpAppCompatActivity(), UserDetailView {
 
     @ProvidePresenter
     fun providePresenter(): UserDetailPresenter {
-        val model = UserDetailModel(ApiService.create())
         val login = intent.getStringExtra(KEY_USER_LOGIN)
         return UserDetailPresenter(model, login)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as MyApp).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_user_detail)
 

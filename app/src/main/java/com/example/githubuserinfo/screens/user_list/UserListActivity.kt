@@ -7,28 +7,34 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.example.githubuserinfo.MyApp
 import com.example.githubuserinfo.R
 import com.example.githubuserinfo.network.api.ApiService
 import com.example.githubuserinfo.network.pojo.User
 import com.example.githubuserinfo.screens.user_detail.UserDetailActivity
 import kotlinx.android.synthetic.main.activity_userlist.*
+import javax.inject.Inject
 
 class UserListActivity : MvpAppCompatActivity(), UserListView {
 
     lateinit var adapter: UserAdapter
+
+    @Inject
+    lateinit var model: UserListModel
 
     @InjectPresenter
     lateinit var presenter: UserListPresenter
 
     @ProvidePresenter
     fun providePresenter(): UserListPresenter {
-        val model = UserListModel(ApiService.create())
         return UserListPresenter(model)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as MyApp).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_userlist)
+
 
         adapter = UserAdapter()
 
